@@ -3,6 +3,9 @@ package ru.alfabank.currencytest.system;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ * Настройки приложения.
+ */
 @Data
 @ConfigurationProperties(prefix = "app")
 public class ConfigProperties {

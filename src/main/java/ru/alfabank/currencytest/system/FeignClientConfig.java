@@ -4,6 +4,9 @@ import feign.codec.ErrorDecoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Свой декодер ошибок Feign.
+ */
 @Configuration
 public class FeignClientConfig {
 

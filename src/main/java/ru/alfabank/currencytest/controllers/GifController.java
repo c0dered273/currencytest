@@ -13,6 +13,10 @@ import ru.alfabank.currencytest.model.ExRates;
 import ru.alfabank.currencytest.services.CurrencyService;
 import ru.alfabank.currencytest.services.GifService;
 
+/**
+ * Возвращает информацию о курсе валюты в виде JSON
+ * или перенаправляет клиента на адрес GIF картинки.
+ */
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/currency")
@@ -21,6 +25,15 @@ public class GifController {
     private final CurrencyService currencyService;
     private final GifService gifService;
 
+    /**
+     * Перенаправляет клиента на GIF. Тематика картинки зависит от динамики курса валюты,
+     * указанной в настройках как app.quote.
+     * Если курс повысился, возвращается GIF по поисковому запросу "rich", если понизился -
+     * по поисковому запросу "broke".
+     *
+     * @param base код базовой валюты, относительно которой берется курс
+     * @return redirect to url
+     */
     @GetMapping("/status")
     public ResponseEntity<Object> currencyStatus(
             @RequestParam(required = false) String base) {
@@ -28,12 +41,25 @@ public class GifController {
         return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
     }
 
+    /**
+     * Возвращает данные о курсе валюты на сегодня.
+     *
+     * @param base код базовой валюты, относительно которой берется курс
+     * @return JSON
+     */
     @GetMapping("/latest")
     public ExRates latestStatus(
             @RequestParam(required = false) String base) {
         return currencyService.getLastCurrency(Optional.ofNullable(base));
     }
 
+    /**
+     * Возвращает архивный курс валюты.
+     *
+     * @param date дата, за которую нужен архив (yyyy-MM-dd)
+     * @param base код базовой валюты, относительно которой берется курс
+     * @return JSON
+     */
     @GetMapping("/historical/{date}")
     public ExRates historicalStatus(
             @PathVariable(name = "date") String date,

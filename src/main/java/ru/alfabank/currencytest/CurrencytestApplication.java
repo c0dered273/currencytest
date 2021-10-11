@@ -5,6 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
+/**
+ * Сервис анализа разницы курсов валют.
+ */
 @SpringBootApplication
 @EnableFeignClients
 @ConfigurationPropertiesScan("ru.alfabank.currencytest.system")
