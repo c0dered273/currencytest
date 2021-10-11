@@ -34,11 +34,13 @@ feign:
 
 #Application settings
 app:
-  currency:
-    base: "USD"
-    quote: "RUB"
-    deep: 1
+  base: "USD"
+  quote: "RUB"
+  deep: 1
   openexchangerates:
-    app-id: "31470ef2035043d8b3630f656a12eaf0"
+    addr: "https://openexchangerates.org/api/"
+    appId: "31470ef2035043d8b3630f656a12eaf0"
   giphy:
-    api-key: "7kRrgXS0IXClkOzHj6Ig4X0yIwT3R9Cy"
+    addr: "https://api.giphy.com/v1/gifs"
+    apiKey: "7kRrgXS0IXClkOzHj6Ig4X0yIwT3R9Cy"
+    searchLimit: 50

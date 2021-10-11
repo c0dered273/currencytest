@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.alfabank.currencytest.model.ExRates;
 
-@FeignClient(name = "exchangeRates", url = "https://openexchangerates.org/api/")
+@FeignClient(name = "exchangeRates", url = "${app.openexchangerates.addr}")
 public interface ExchangeRatesClient {
 
     @GetMapping("/latest.json")
