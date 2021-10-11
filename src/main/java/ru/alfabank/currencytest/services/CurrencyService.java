@@ -21,7 +21,6 @@ public class CurrencyService {
     private final ConfigProperties props;
     private final ExchangeRatesClient exchangeRatesClient;
 
-
     public Trend getTrend(Optional<String> base) {
         var lastRates = getLastCurrency(base);
         var historicalRates = getHistoricCurrency(histDate(LocalDateTime.now()), base);
