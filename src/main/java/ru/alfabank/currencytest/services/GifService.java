@@ -18,6 +18,9 @@ import org.springframework.web.server.ResponseStatusException;
 import ru.alfabank.currencytest.clients.GiphyClient;
 import ru.alfabank.currencytest.system.ConfigProperties;
 
+/**
+ * Обеспечивает работу со ссылками на GIF анимацию.
+ */
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -27,6 +30,14 @@ public class GifService {
     private final CurrencyService currencyService;
     private final GiphyClient giphyClient;
 
+    /**
+     * Возвращает http заголовок со ссылкой на GIF, полученной в результате сравнения курса валют.
+     * Выбирается случайная ссылка из поисковой выдачи giphy.com. Поисковый запрос формируется
+     * по результату сравнения курсов валют.
+     *
+     * @param base код базовой валюты, относительно которой берется курс
+     * @return HttpHeaders
+     */
     public HttpHeaders getRedirectHeader(String base) {
         var headers = new HttpHeaders();
         var trend = currencyService.getTrend(Optional.ofNullable(base));
@@ -44,6 +55,12 @@ public class GifService {
         return headers;
     }
 
+    /**
+     * Возвращает ссылку на случайную GIF из поисковой выдачи giphy.com.
+     *
+     * @param query строка поискового запроса
+     * @return ссылка на GIF
+     */
     public String getRandomGif(String query) {
         String result;
         try {
@@ -57,6 +74,13 @@ public class GifService {
         return result;
     }
 
+    /**
+     * Возвращает весь сырой JSON ответ на поисковый запрос giphy.com.
+     *
+     * @param query строка поискового запроса
+     * @return JsonNode
+     * @throws JsonProcessingException в случае ошибки структуры JSON
+     */
     public JsonNode getGifData(String query) throws JsonProcessingException {
         var mapper = new ObjectMapper();
         return mapper.readTree(
@@ -67,6 +91,13 @@ public class GifService {
                 .get("data");
     }
 
+    /**
+     * Ищет строки со ссылками на GIF в структуре ответа на поисковый запрос.
+     * Если в ответе сервера ссылок нет, возвращает пустой список.
+     *
+     * @param jsonNode сырой JSON ответ на поисковый запрос
+     * @return список строк со ссылками
+     */
     private List<String> parseRespForLinks(JsonNode jsonNode) {
         List<String> result = new ArrayList<>();
         if (jsonNode == null) {
