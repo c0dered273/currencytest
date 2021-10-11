@@ -18,7 +18,7 @@ public interface ExchangeRatesClient {
      * @param appId токен для доступа к API
      * @param base код базовой валюты, относительно которой берется курс
      * @param symbols код валюты, курс которой нам нужен
-     * @return ExRates
+     * @return ExRates или выбрасывает исключение FeignException
      */
     @GetMapping("/latest.json")
     ExRates getLatest(@RequestParam(name = "app_id") String appId,
@@ -32,7 +32,7 @@ public interface ExchangeRatesClient {
      * @param appId токен для доступа к API
      * @param base код базовой валюты, относительно которой берется курс
      * @param symbols код валюты, курс которой нам нужен
-     * @return ExRates
+     * @return ExRates или выбрасывает исключение FeignException
      */
     @GetMapping("/historical/{date}.json")
     ExRates getHistoric(@PathVariable(name = "date") String date,

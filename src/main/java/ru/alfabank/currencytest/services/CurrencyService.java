@@ -34,7 +34,7 @@ public class CurrencyService {
      * на выходные дни или понедельник, возвращается значение за предыдущую пятницу.
      *
      * @param base код базовой валюты, относительно которой берется курс
-     * @return Trend
+     * @return Trend или исключение ResponseStatusException
      */
     public Trend getTrend(Optional<String> base) {
         var lastRates = getLastCurrency(base);
@@ -47,7 +47,7 @@ public class CurrencyService {
      * Возвращает JSON с курсами валют за сегодня.
      *
      * @param baseCurrency код базовой валюты, относительно которой берется курс
-     * @return ExRates
+     * @return ExRates или исключение ResponseStatusException
      */
     public ExRates getLastCurrency(Optional<String> baseCurrency) {
         var base = baseCurrency.orElse(props.getBase());
@@ -61,7 +61,7 @@ public class CurrencyService {
      *
      * @param date дата, за которую нужен архив (yyyy-MM-dd)
      * @param baseCurrency код базовой валюты, относительно которой берется курс
-     * @return ExRates
+     * @return ExRates или исключение ResponseStatusException
      */
     public ExRates getHistoricCurrency(String date, Optional<String> baseCurrency) {
         var base = baseCurrency.orElse(props.getBase());

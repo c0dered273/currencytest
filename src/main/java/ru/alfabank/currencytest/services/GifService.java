@@ -75,7 +75,7 @@ public class GifService {
     }
 
     /**
-     * Возвращает весь сырой JSON ответ на поисковый запрос giphy.com.
+     * Возвращает сырой JSON ответ на поисковый запрос giphy.com.
      *
      * @param query строка поискового запроса
      * @return JsonNode

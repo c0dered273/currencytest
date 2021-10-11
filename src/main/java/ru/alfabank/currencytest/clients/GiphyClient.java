@@ -16,7 +16,7 @@ public interface GiphyClient {
      * @param apiKey токен для доступа к API
      * @param query строка поискового запроса
      * @param limit лимит выдачи результатов поиска (для бесплатной версии максимум 50)
-     * @return JSON с результатами в виде строки
+     * @return JSON строку с результатом запроса или выбрасывает исключение FeignException
      */
     @GetMapping("/search")
     String search(@RequestParam(name = "api_key") String apiKey,
