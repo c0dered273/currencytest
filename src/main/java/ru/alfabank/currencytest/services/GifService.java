@@ -78,6 +78,9 @@ public class GifService {
                     .get("images")
                     .get("original")
                     .get("url").asText();
+            if (imageUrl == null) {
+                imageUrl = "";
+            }
             result.add(imageUrl);
         }
         return result;
