@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.alfabank.currencytest.model.ExRates;
 import ru.alfabank.currencytest.services.CurrencyService;
+import ru.alfabank.currencytest.services.GifService;
 
 @RequiredArgsConstructor
 @RestController
@@ -16,10 +17,12 @@ import ru.alfabank.currencytest.services.CurrencyService;
 public class GifController {
 
     private final CurrencyService cs;
+    private final GifService gs;
 
     @GetMapping("/status")
     public boolean currencyStatus(
             @RequestParam(required = false) String base) {
+        gs.getGifLinksList("rich");
         return cs.getTrend(Optional.ofNullable(base)).positive();
     }
 
