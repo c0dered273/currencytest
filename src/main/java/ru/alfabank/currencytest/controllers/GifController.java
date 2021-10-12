@@ -1,6 +1,5 @@
 package ru.alfabank.currencytest.controllers;
 
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +37,7 @@ public class GifController {
     public ResponseEntity<Object> currencyStatus(
             @RequestParam(required = false) String base) {
         var headers = gifService.getRedirectHeader(base);
-        return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
+        return new ResponseEntity<>(headers, HttpStatus.FOUND);
     }
 
     /**
@@ -50,7 +49,7 @@ public class GifController {
     @GetMapping("/latest")
     public ExRates latestStatus(
             @RequestParam(required = false) String base) {
-        return currencyService.getLastCurrency(Optional.ofNullable(base));
+        return currencyService.getLastCurrency(base);
     }
 
     /**
@@ -64,6 +63,6 @@ public class GifController {
     public ExRates historicalStatus(
             @PathVariable(name = "date") String date,
             @RequestParam(required = false) String base) {
-        return currencyService.getHistoricCurrency(date, Optional.ofNullable(base));
+        return currencyService.getHistoricCurrency(date, base);
     }
 }

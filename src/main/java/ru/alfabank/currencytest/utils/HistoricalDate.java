@@ -1,62 +1,15 @@
 package ru.alfabank.currencytest.utils;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjusters;
 
 /**
- * Вспомогательный класс, содержит методы для вычисления нужного дня недели
- * и форматирования даты для формирования запроса о курсах валют.
+ * Содержит методы для вычисления нужного дня недели
+ * форматирования даты для формирования запроса о курсах валют.
  */
-public class HistoricalDate {
+public interface HistoricalDate {
+    LocalDate lastWeekday(LocalDate localDate);
 
-    private HistoricalDate() {
-    }
+    LocalDate weekdayMinusDeep(LocalDate localDate, int deep);
 
-    /**
-     * Возвращает дату последнего рабочего дня относительно переданной даты.
-     * Для выходных - пятница, для остальных дней недели - тот же день.
-     *
-     * @param localDate дата, относительно которой нужно вычислить рабочий день
-     * @return LocalDate
-     */
-    public static LocalDate lastWeekday(LocalDate localDate) {
-        var dayOfWeek = localDate.getDayOfWeek();
-        if (DayOfWeek.SATURDAY.equals(dayOfWeek)
-                || DayOfWeek.SUNDAY.equals(dayOfWeek)) {
-            return localDate.with(TemporalAdjusters.previous(DayOfWeek.FRIDAY));
-        }
-        return localDate;
-    }
-
-    /**
-     * Возвращает переданную дату рабочего дня минус количество дней deep.
-     * Если текущий день - понедельник, увеличивает глубину запроса на два,
-     * чтобы исключить выходные.
-     *
-     * @param localDate дата, относительно которой нужно вычислить рабочий день
-     * @param deep глубина запроса в архив
-     * @return LocalDate
-     */
-    public static LocalDate weekdayMinusDeep(LocalDate localDate, int deep) {
-        var dayOfWeek = LocalDate.now().getDayOfWeek();
-        if (DayOfWeek.MONDAY.equals(dayOfWeek)) {
-            return localDate.minusDays(deep + 2L);
-        }
-        return localDate.minusDays(deep);
-    }
-
-    /**
-     * Конвертирует дату в строку в формате pattern.
-     * Для openexchangerates формат даты - yyyy-MM-dd
-     *
-     * @param localDate дата
-     * @param pattern формат
-     * @return String
-     */
-    public static String histDateFormatter(LocalDate localDate, String pattern) {
-        var formatter = DateTimeFormatter.ofPattern(pattern);
-        return localDate.format(formatter);
-    }
+    String histDateFormatter(LocalDate localDate, String pattern);
 }
