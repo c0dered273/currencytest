@@ -9,7 +9,7 @@ import java.time.LocalDate;
 public interface HistoricalDate {
     LocalDate lastWeekday(LocalDate localDate);
 
-    LocalDate weekdayMinusDeep(LocalDate localDate, int deep);
+    LocalDate dateMinusDeep(LocalDate localDate, int deep);
 
     String histDateFormatter(LocalDate localDate, String pattern);
 }

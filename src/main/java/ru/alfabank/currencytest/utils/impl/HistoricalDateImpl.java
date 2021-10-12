@@ -18,48 +18,61 @@ public class HistoricalDateImpl implements HistoricalDate {
      * Возвращает дату последнего рабочего дня относительно переданной даты.
      * Для выходных - пятница, для остальных дней недели - тот же день.
      *
-     * @param localDate дата, относительно которой нужно вычислить рабочий день
+     * @param date дата, относительно которой нужно вычислить рабочий день
      * @return LocalDate
      */
     @Override
-    public LocalDate lastWeekday(LocalDate localDate) {
-        var dayOfWeek = localDate.getDayOfWeek();
-        if (DayOfWeek.SATURDAY.equals(dayOfWeek)
-                || DayOfWeek.SUNDAY.equals(dayOfWeek)) {
-            return localDate.with(TemporalAdjusters.previous(DayOfWeek.FRIDAY));
+    public LocalDate lastWeekday(LocalDate date) {
+        if (isWeekend(date)) {
+            return date.with(TemporalAdjusters.previous(DayOfWeek.FRIDAY));
         }
-        return localDate;
+        return date;
     }
 
     /**
      * Возвращает переданную дату рабочего дня минус количество дней deep.
      * Если текущий день - понедельник, увеличивает глубину запроса на два,
-     * чтобы исключить выходные.
+     * чтобы исключить выходные. Если результат приходится на выходной день,
+     * возвращает предидущую пятницу.
      *
-     * @param localDate дата, относительно которой нужно вычислить рабочий день
+     * @param date дата, относительно которой нужно вычислить рабочий день
      * @param deep глубина запроса в архив
      * @return LocalDate
      */
     @Override
-    public LocalDate weekdayMinusDeep(LocalDate localDate, int deep) {
-        var dayOfWeek = LocalDate.now().getDayOfWeek();
-        if (DayOfWeek.MONDAY.equals(dayOfWeek)) {
-            return localDate.minusDays(deep + 2L);
+    public LocalDate dateMinusDeep(LocalDate date, int deep) {
+        var result = minusDeep(date, deep);
+        if (isWeekend(result)) {
+            result = lastWeekday(result);
         }
-        return localDate.minusDays(deep);
+        return result;
     }
 
     /**
      * Конвертирует дату в строку в формате pattern.
      * Для openexchangerates формат даты - yyyy-MM-dd
      *
-     * @param localDate дата
+     * @param date дата
      * @param pattern формат
      * @return String
      */
     @Override
-    public String histDateFormatter(LocalDate localDate, String pattern) {
+    public String histDateFormatter(LocalDate date, String pattern) {
         var formatter = DateTimeFormatter.ofPattern(pattern);
-        return localDate.format(formatter);
+        return date.format(formatter);
+    }
+
+    private boolean isWeekend(LocalDate date) {
+        var dayOfWeek = date.getDayOfWeek();
+        return DayOfWeek.SATURDAY.equals(dayOfWeek)
+                || DayOfWeek.SUNDAY.equals(dayOfWeek);
+    }
+
+    private LocalDate minusDeep(LocalDate today, int deep) {
+        var weekday = lastWeekday(today);
+        if (DayOfWeek.MONDAY.equals(today.getDayOfWeek())) {
+            return weekday.minusDays(deep + 2L);
+        }
+        return weekday.minusDays(deep);
     }
 }

@@ -81,10 +81,10 @@ public class CurrencyServiceImpl implements CurrencyService {
      * @param pattern паттерн для форматирования даты, для openexchangerates - yyyy-MM-dd
      * @return String
      */
-    @Override
-    public String getHistoricalDate(String pattern) {
-        var histDay = hd.weekdayMinusDeep(
-                hd.lastWeekday(LocalDate.now()), props.getDeep());
+    private String getHistoricalDate(String pattern) {
+        var histDay = hd.dateMinusDeep(
+                LocalDate.now(),
+                props.getDeep());
         return hd.histDateFormatter(histDay, pattern);
     }
 

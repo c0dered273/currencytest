@@ -13,5 +13,4 @@ public interface CurrencyService {
 
     ExRates getHistoricCurrency(String date, String baseCurrency);
 
-    String getHistoricalDate(String pattern);
 }
