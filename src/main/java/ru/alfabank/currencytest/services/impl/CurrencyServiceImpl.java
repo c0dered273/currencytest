@@ -36,10 +36,10 @@ public class CurrencyServiceImpl implements CurrencyService {
      * @return Trend или исключение ResponseStatusException
      */
     @Override
-    public Trend getTrend(String base) {
+    public Trend getTrend(LocalDate today, String base) {
         var lastRates = getLastCurrency(base);
         var historicalRates = getHistoricCurrency(
-                getHistoricalDate("yyyy-MM-dd"), base);
+                getHistoricalDate(today, "yyyy-MM-dd"), base);
         return compareRates(lastRates, historicalRates);
     }
 
@@ -81,9 +81,8 @@ public class CurrencyServiceImpl implements CurrencyService {
      * @param pattern паттерн для форматирования даты, для openexchangerates - yyyy-MM-dd
      * @return String
      */
-    private String getHistoricalDate(String pattern) {
-        var histDay = hd.dateMinusDeep(
-                LocalDate.now(),
+    private String getHistoricalDate(LocalDate today, String pattern) {
+        var histDay = hd.dateMinusDeep(today,
                 props.getDeep());
         return hd.histDateFormatter(histDay, pattern);
     }

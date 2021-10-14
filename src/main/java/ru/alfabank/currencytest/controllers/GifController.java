@@ -1,5 +1,6 @@
 package ru.alfabank.currencytest.controllers;
 
+import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class GifController {
     @GetMapping("/status")
     public ResponseEntity<Object> currencyStatus(
             @RequestParam(required = false) String base) {
-        var headers = gifService.getRedirectHeader(base);
+        var headers = gifService.getRedirectHeader(LocalDate.now(), base);
         return new ResponseEntity<>(headers, HttpStatus.FOUND);
     }
 

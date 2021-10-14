@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -40,9 +41,9 @@ public class GifServiceImpl implements GifService {
      * @return HttpHeaders
      */
     @Override
-    public HttpHeaders getRedirectHeader(String base) {
+    public HttpHeaders getRedirectHeader(LocalDate today, String base) {
         var headers = new HttpHeaders();
-        var trend = currencyService.getTrend(base);
+        var trend = currencyService.getTrend(today, base);
         try {
             if (trend.positive()) {
                 headers.setLocation(new URI(getRandomGif("rich")));
