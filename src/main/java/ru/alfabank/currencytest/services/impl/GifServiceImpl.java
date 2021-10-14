@@ -64,7 +64,8 @@ public class GifServiceImpl implements GifService {
      * @param query строка поискового запроса
      * @return ссылка на GIF
      */
-    @Override public String getRandomGif(String query) {
+    @Override
+    public String getRandomGif(String query) {
         String result;
         try {
             var gifData = getGifData(query);
@@ -84,7 +85,8 @@ public class GifServiceImpl implements GifService {
      * @return JsonNode
      * @throws JsonProcessingException в случае ошибки структуры JSON
      */
-    @Override public JsonNode getGifData(String query) throws JsonProcessingException {
+    @Override
+    public JsonNode getGifData(String query) throws JsonProcessingException {
         var mapper = new ObjectMapper();
         return mapper.readTree(
                         giphyClient.search(
