@@ -66,34 +66,36 @@ public class GifServiceImpl implements GifService {
      */
     @Override
     public String getRandomGif(String query) {
-        String result;
-        try {
-            var gifData = getGifData(query);
-            result = getRandomLink(parseRespForLinks(gifData));
-        } catch (JsonProcessingException e) {
-            log.error("Error json processing of Gihpy.com search response: {}", e.getMessage());
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Error json processing of Gihpy.com");
-        }
-        return result;
+        var gifData = getGifData(query);
+        return getRandomLink(parseRespForLinks(gifData));
     }
 
     /**
      * Возвращает сырой JSON ответ на поисковый запрос giphy.com.
+     * INTERNAL_SERVER_ERROR в случае ошибки.
      *
      * @param query строка поискового запроса
      * @return JsonNode
-     * @throws JsonProcessingException в случае ошибки структуры JSON
      */
     @Override
-    public JsonNode getGifData(String query) throws JsonProcessingException {
+    public JsonNode getGifData(String query) {
         var mapper = new ObjectMapper();
-        return mapper.readTree(
-                        giphyClient.search(
-                                props.getGiphy().getApiKey(),
-                                query,
-                                props.getGiphy().getSearchLimit()))
-                .get("data");
+        JsonNode result;
+        try {
+            result = mapper.readTree(
+                            giphyClient.search(
+                                    props.getGiphy().getApiKey(),
+                                    query,
+                                    props.getGiphy().getSearchLimit()))
+                    .get("data");
+        } catch (JsonProcessingException e) {
+            log.error(
+                    "Can't parse response or find object 'data' in gihpy.com response: {}",
+                    e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Can't parse response or find object 'data' in gihpy.com response");
+        }
+        return result;
     }
 
     /**
@@ -123,6 +125,14 @@ public class GifServiceImpl implements GifService {
     }
 
     private String getRandomLink(List<String> links) {
+        if (links.isEmpty()) {
+            log.error("No links received from giphy.com");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "No links received from giphy.com");
+        }
+        if (links.size() == 1) {
+            return links.get(0);
+        }
         return links.get(ThreadLocalRandom.current().nextInt(links.size() - 1));
     }
 
