@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 import ru.alfabank.currencytest.model.ExRates;
 import ru.alfabank.currencytest.model.Trend;
 import ru.alfabank.currencytest.services.CurrencyService;
@@ -71,5 +72,13 @@ class CurrencyServiceImplTest {
                 "2021-10-13",
                 props.getBase());
         assertThat(result).isEqualTo(expect);
+    }
+
+    @Test
+    void whenGetErrorJson() {
+        var expect = "403 FORBIDDEN \"Not allowed error message.\"";
+        assertThatThrownBy(
+                () -> cs.getLastCurrency("NONE")
+        ).isInstanceOf(ResponseStatusException.class).hasMessage(expect);
     }
 }
