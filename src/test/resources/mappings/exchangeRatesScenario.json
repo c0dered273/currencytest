@@ -1,0 +1,57 @@
+{
+  "mappings": [
+    {
+      "scenarioName": "Positive then negative latest",
+      "requiredScenarioState": "Started",
+      "newScenarioState": "Negative attempt",
+      "request": {
+        "method": "GET",
+        "urlPath": "/latest.json",
+        "queryParameters": {
+          "app_id": {
+            "equalTo": "31470ef2035043d8b3630f656a12eaf0"
+          },
+          "base": {
+            "equalTo": "USD"
+          },
+          "symbols": {
+            "equalTo": "RUB"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "bodyFileName": "exchangerates/latest.json"
+      }
+    },
+    {
+      "scenarioName": "Positive then negative latest",
+      "requiredScenarioState": "Negative attempt",
+      "request": {
+        "method": "GET",
+        "urlPath": "/latest.json",
+        "queryParameters": {
+          "app_id": {
+            "equalTo": "31470ef2035043d8b3630f656a12eaf0"
+          },
+          "base": {
+            "equalTo": "USD"
+          },
+          "symbols": {
+            "equalTo": "RUB"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "bodyFileName": "exchangerates/latest_neg.json"
+      }
+    }
+  ]
+}

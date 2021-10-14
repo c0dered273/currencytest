@@ -1,0 +1,29 @@
+{
+  "mappings": [
+    {
+      "priority": 10,
+      "request": {
+        "method": "GET",
+        "urlPath": "/historical/2021-10-13.json",
+        "queryParameters": {
+          "app_id": {
+            "equalTo": "31470ef2035043d8b3630f656a12eaf0"
+          },
+          "base": {
+            "equalTo": "USD"
+          },
+          "symbols": {
+            "equalTo": "RUB"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "bodyFileName": "exchangerates/2021-10-13.json"
+      }
+    }
+  ]
+}

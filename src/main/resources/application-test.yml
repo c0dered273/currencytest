@@ -1,0 +1,46 @@
+#Server
+server:
+  port: 0
+  error:
+    whitelabel:
+      enabled: false
+    include-stacktrace: never
+    include-exception: false
+
+#Logging
+logging:
+  level:
+    root: INFO
+    web: DEBUG
+  file:
+    name: ./logs/currency-service-test.log
+
+#Spring
+spring:
+  main:
+    banner-mode: off
+  output:
+    ansi:
+      enabled: always
+
+#Feign
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 10000
+        loggerLevel: basic
+
+#Application settings
+app:
+  base: "USD"
+  quote: "RUB"
+  deep: 1
+  openexchangerates:
+    addr: "http://localhost:${wiremock.server.port}"
+    appId: "31470ef2035043d8b3630f656a12eaf0"
+  giphy:
+    addr: "http://localhost:${wiremock.server.port}"
+    apiKey: "7kRrgXS0IXClkOzHj6Ig4X0yIwT3R9Cy"
+    searchLimit: 50
