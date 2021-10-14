@@ -1,0 +1,57 @@
+{
+  "mappings": [
+    {
+      "scenarioName": "Rich and broke gifs",
+      "requiredScenarioState": "Started",
+      "newScenarioState": "Broke gif",
+      "request": {
+        "method": "GET",
+        "urlPath": "/search",
+        "queryParameters": {
+          "api_key": {
+            "equalTo": "7kRrgXS0IXClkOzHj6Ig4X0yIwT3R9Cy"
+          },
+          "q": {
+            "equalTo": "rich"
+          },
+          "limit": {
+            "equalTo": "50"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "bodyFileName": "giphy/rich-data.json"
+      }
+    },
+    {
+      "scenarioName": "Rich and broke gifs",
+      "requiredScenarioState": "Broke gif",
+      "request": {
+        "method": "GET",
+        "urlPath": "/search",
+        "queryParameters": {
+          "api_key": {
+            "equalTo": "7kRrgXS0IXClkOzHj6Ig4X0yIwT3R9Cy"
+          },
+          "q": {
+            "equalTo": "broke"
+          },
+          "limit": {
+            "equalTo": "50"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "bodyFileName": "giphy/broke-data.json"
+      }
+    }
+  ]
+}

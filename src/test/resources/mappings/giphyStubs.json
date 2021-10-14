@@ -1,0 +1,79 @@
+{
+  "mappings": [
+    {
+      "priority": 10,
+      "request": {
+        "method": "GET",
+        "urlPath": "/search",
+        "queryParameters": {
+          "api_key": {
+            "equalTo": "7kRrgXS0IXClkOzHj6Ig4X0yIwT3R9Cy"
+          },
+          "q": {
+            "equalTo": "random"
+          },
+          "limit": {
+            "equalTo": "50"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "bodyFileName": "giphy/gif-data.json"
+      }
+    },
+    {
+      "priority": 20,
+      "request": {
+        "method": "GET",
+        "urlPath": "/search",
+        "queryParameters": {
+          "api_key": {
+            "equalTo": "7kRrgXS0IXClkOzHj6Ig4X0yIwT3R9Cy"
+          },
+          "q": {
+            "equalTo": "one"
+          },
+          "limit": {
+            "equalTo": "50"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "bodyFileName": "giphy/one-link-data.json"
+      }
+    },
+    {
+      "priority": 30,
+      "request": {
+        "method": "GET",
+        "urlPath": "/search",
+        "queryParameters": {
+          "api_key": {
+            "equalTo": "7kRrgXS0IXClkOzHj6Ig4X0yIwT3R9Cy"
+          },
+          "q": {
+            "equalTo": "none"
+          },
+          "limit": {
+            "equalTo": "50"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "bodyFileName": "giphy/none-data.json"
+      }
+    }
+  ]
+}
